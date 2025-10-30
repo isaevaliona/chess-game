@@ -20,7 +20,7 @@ class Pawn(Piece):
         x, y = position
         direction = -1 if self.color == 'white' else 1
         
-        # Ход вперед
+        # Ход вперед на 1 клетку
         if board.is_empty((x + direction, y)):
             moves.append((x + direction, y))
             # Двойной ход с начальной позиции
@@ -42,7 +42,7 @@ class Rook(Piece):
     
     def get_possible_moves(self, board, position):
         moves = []
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]  # Вертикаль и горизонталь
         
         for dx, dy in directions:
             for i in range(1, 8):
@@ -75,6 +75,56 @@ class Knight(Piece):
             if board.is_valid_position(new_pos) and not board.is_ally(new_pos, self.color):
                 moves.append(new_pos)
         
+        return moves
+
+class Bishop(Piece):
+    def __init__(self, color):
+        symbol = '♗' if color == 'white' else '♝'
+        super().__init__(color, symbol)
+    
+    def get_possible_moves(self, board, position):
+        moves = []
+        directions = [(1, 1), (1, -1), (-1, 1), (-1, -1)]  # Диагонали
+        
+        for dx, dy in directions:
+            for i in range(1, 8):
+                new_pos = (position[0] + dx * i, position[1] + dy * i)
+                if not board.is_valid_position(new_pos):
+                    break
+                if board.is_empty(new_pos):
+                    moves.append(new_pos)
+                elif board.is_opponent(new_pos, self.color):
+                    moves.append(new_pos)
+                    break
+                else:
+                    break
+        return moves
+
+class Queen(Piece):
+    def __init__(self, color):
+        symbol = '♕' if color == 'white' else '♛'
+        super().__init__(color, symbol)
+    
+    def get_possible_moves(self, board, position):
+        moves = []
+        # Объединяем направления ладьи и слона
+        directions = [
+            (1, 0), (-1, 0), (0, 1), (0, -1),  # Вертикаль/горизонталь
+            (1, 1), (1, -1), (-1, 1), (-1, -1)   # Диагонали
+        ]
+        
+        for dx, dy in directions:
+            for i in range(1, 8):
+                new_pos = (position[0] + dx * i, position[1] + dy * i)
+                if not board.is_valid_position(new_pos):
+                    break
+                if board.is_empty(new_pos):
+                    moves.append(new_pos)
+                elif board.is_opponent(new_pos, self.color):
+                    moves.append(new_pos)
+                    break
+                else:
+                    break
         return moves
 
 class King(Piece):

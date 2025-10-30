@@ -1,4 +1,4 @@
-from pieces import Pawn, Rook, Knight, King
+from pieces import Pawn, Rook, Knight, Bishop, Queen, King
 
 class ChessBoard:
     def __init__(self):
@@ -22,6 +22,16 @@ class ChessBoard:
         self.board[0][6] = Knight('black')
         self.board[7][1] = Knight('white')
         self.board[7][6] = Knight('white')
+        
+        # Слоны
+        self.board[0][2] = Bishop('black')
+        self.board[0][5] = Bishop('black')
+        self.board[7][2] = Bishop('white')
+        self.board[7][5] = Bishop('white')
+        
+        # Ферзи
+        self.board[0][3] = Queen('black')
+        self.board[7][3] = Queen('white')
         
         # Короли
         self.board[0][4] = King('black')
