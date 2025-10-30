@@ -15,7 +15,7 @@
 
 ## Установка
 ```bash
-git clone https://github.com/IssevaAliona/chess-game.git
+git clone https://github.com/isaevaliona/chess-game.git
 cd chess-game
 
 # Создание виртуального окружения (опционально)
